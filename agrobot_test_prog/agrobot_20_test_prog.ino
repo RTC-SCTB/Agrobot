@@ -158,28 +158,14 @@ void beep(uint8_t num, uint16_t tim)
 
 void adcDataCounter(float* voltage)   // вычисление значения напряжения питания и тока, запись в параметры
 {
-  static float voltage_values[NUMBER_OF_ADC_MEASUREMENTS] = {0}; //массив для хранения NUMBER_OF_ADC_MEASUREMENTS измерений напряжений
-  static uint8_t values_count = 0; //счетчик записи данных в массив
   static uint8_t adcCount = ADC_MAX_COUNT;  // ограничение по частоте считывания данных с АЦП
-  static float m_voltage = 0;   // доп переменная для того, чтобы не ждать 14 вызовов ф-ии, если пропустили первый 
-  if (adcCount >= ADC_MAX_COUNT)    //каждые ADC_MAX_COUNT = 15 раз меняет значения, приходящие в параметрах
+  static float m_voltage = 0;   // доп переменные для того, чтобы не ждать 14 вызовов ф-ии, если пропустили первый 
+  if (adcCount >= ADC_MAX_COUNT)    // каждые ADC_MAX_COUNT = 15 раз меняет значения,приходящие в параметрах
   {
-    voltage_values[values_count] = ( (float)(analogRead(ADC_VOLTAGE_CH) - ADC_MIN_VOLT_VALYE) / (float)(ADC_MAX_VOLT_VALUE - ADC_MIN_VOLT_VALYE) ) * (MAX_SUPPLY_VOLTAGE - MIN_SUPPLY_VOLTAGE) + MIN_SUPPLY_VOLTAGE; //вычисление напряжения на выходе буффера
     adcCount = 0;
-    values_count++;
-    /*display.setCursor(0, 48);
-    display.print("ADC:  ");
-    display.print(analogRead(ADC_VOLTAGE_CH));
-    display.display(); */   
+    m_voltage = ADC_VOLT_DIV_CONST * analogRead(ADC_VOLTAGE_CH) * ADC_UAREF / ADC_MAX; //вычисление напряжения на выходе буффера
   }
-  if(values_count > NUMBER_OF_ADC_MEASUREMENTS - 1){ //если выполнено NUMBER_OF_ADC_MEASUREMENTS измерений
-    values_count = 0;
-    *voltage = 0;
-    for(uint8_t i = 0; i < NUMBER_OF_ADC_MEASUREMENTS; i++){ //суммируем все 
-      *voltage += voltage_values[i];
-    }
-    *voltage = *voltage / NUMBER_OF_ADC_MEASUREMENTS; //и делим на кол-во измерений
-  }
+  *voltage = m_voltage;
   adcCount++;
 }
 
@@ -368,20 +354,14 @@ void setup()
   
   beep(1, 500);
 
-  analogReference(INTERNAL);  // настройка опорного напряжения для АЦП: внутренний источник 1.1В
+  analogReference(EXTERNAL);  // настройка опорного напряжения для АЦП: внешний источник на выводе AREF
 }
 
 void loop()
 {
-  static uint32_t lastVoltageMeasurement = 0; //время прошлого измерения напряжения
   ps2x.read_gamepad(false, 0); // считывание данных с джойстика и установка скорости вибрации
   adcDataCounter(&voltage); // обновляем данные с АЦП
-
-  if(millis() - lastVoltageMeasurement > TIME_VOLTAGE_MEASUREMENT){
-    adcDataCounter(&voltage); // обновляем донные с АЦП
-    lastVoltageMeasurement = millis();
-  }
-  
+ 
   workFSM();
   delay(15);
 }
