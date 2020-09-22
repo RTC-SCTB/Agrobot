@@ -5,6 +5,8 @@
 
 // определение всех нужных параметров
 
+#define TIME_VOLTAGE_MEASUREMENT    20  //время между измерениями напряжения. Общее время между обновлением значения нарпяжения равно (TIME_VOLTAGE_MEASUREMENT + 15) * ADC_MAX_COUNT * NUMBER_OF_ADC_MEASUREMENTS
+
 // резмеры изображений
 #define IMAGE_WIDTH   128
 #define IMAGE_HEIGHT  64

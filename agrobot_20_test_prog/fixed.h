@@ -30,12 +30,10 @@
 
 // работа с АЦП
 #define ADC_VOLTAGE_CH  A7  // канал считывания напряжения
-#define ADC_UAREF   5.0     // опорное напряжение
-#define ADC_MAX     1024    // максимальная разрядность
-#define ADC_VOLT_DIV_CONST  1 // константа делителя напряжения
 #define ADC_MAX_COUNT    15  // задержка преобразования АЦП
-
-#define MAX_MCU_CURRENT 5 //максимальный ток, при превышении которого срабатывает защита (5А)
-#define MIN_MCU_VOLTAGE 3.3
-#define ADC_CURR_CONST 0.47
+#define NUMBER_OF_ADC_MEASUREMENTS 10 //количество измерений для взятия среднего напряжения
+#define MAX_SUPPLY_VOLTAGE 8.4 //Два аккумулятора формата 18650 выдют максимально 8.4 вольта
+#define MIN_SUPPLY_VOLTAGE 6.0 //Мимальное рабочее напряжение для 2ух аакумуляторов 18650 2.75В * 2 = ~6В
+#define ADC_MAX_VOLT_VALUE 1020 //значение АЦП при напряжении источника MAX_SUPPLY_VOLTAGE
+#define ADC_MIN_VOLT_VALYE 735 //значение АЦП при напряжении источника MIN_SUPPLY_VOLTAGE 
 

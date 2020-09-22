@@ -11,7 +11,7 @@
 /*
  * Прошивка для агробота прошедшая небольшое ревью, возможно некоторые моменты следовало бы запихнуть в классы,
  * но для одного cpp файла смысла от этого особо не вижу. Сделать большее количество cpp файлов данная среда разработки не представляет возможным. 
- * Были вынесены некоторые дефайны и константы в файлы config.h, fixed.h, pictures.h из-за большого их обилия и усложнения читабельности кода.
+ * Были вынесены некоторые дефа йны и константы в файлы config.h, fixed.h, pictures.h из-за большого их обилия и усложнения читабельности кода.
  * В файле config.h находятся вещи, которые можно/нужно менять в зависимости от версии или параметров робота.
  * В файле fixed.h находятся вещи, которые не надо трогать, они там только чтобы упростить читаемость кода.
  * В файле pictures.h находятся изображения выводимые на дисплей.
@@ -480,8 +480,8 @@ bool workFSM(float *voltage)    // рабочий режим
       if (ps2x.ButtonPressed(PSB_R2)) { state = SPEED_DOWN; }
       if (ps2x.ButtonPressed(PSB_L2)) { state = PLOW_SWITCH; }
       if (ps2x.ButtonPressed(PSB_L1)) { state = PLANT_ACTIVATION; }
-      if (ps2x.Button(PSB_TRIANGLE)) { state = BUCKET_UP; }
-      if (ps2x.Button(PSB_CROSS)) { state = BUCKET_DOWN; }
+      if (ps2x.Button(PSB_CROSS)) { state = BUCKET_UP; }
+      if (ps2x.Button(PSB_TRIANGLE)) { state = BUCKET_DOWN; }
       if (ps2x.Button(PSB_CIRCLE)) { state = BUCKET_GRAB_CLAMP; }
       if (ps2x.Button(PSB_SQUARE)) { state = BUCKET_GRAB_LOOSE; }
       if (ps2x.Button(PSB_L3)) { state = SHOW_VOLTAGE; }
